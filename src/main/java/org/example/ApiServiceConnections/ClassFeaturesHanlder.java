@@ -1,5 +1,7 @@
 package org.example.ApiServiceConnections;
 
+import org.example.Main;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -16,6 +18,10 @@ public class ClassFeaturesHanlder {
     }
 
     public HttpResponse<String> getClassFeatures(int index) {
+        if (index > 12){
+            System.out.println("index out of bounds! Index > 12");
+            return null;
+        }
         try {
             HttpRequest request = HttpRequest.newBuilder(new URI(ApiConnectionConstans.URL + ApiConnectionConstans.classes[index] + "/levels/1/features")).GET().build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());

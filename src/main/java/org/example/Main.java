@@ -1,17 +1,37 @@
 package org.example;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
+import org.example.ApiServiceConnections.*;
+import org.example.Character.JSONMapper;
+
 import java.net.http.HttpClient;
+import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws URISyntaxException, IOException, InterruptedException {
+    public static void main(String[] args) {
+
+        RaceInformationHandler cfh = new RaceInformationHandler(HttpClient.newHttpClient());
+        String jeden = cfh.getRaceInformation(8).body();
+        JSONMapper mapper = new JSONMapper();
 
 
-        Service service = new Service(HttpClient.newHttpClient());
+//        Scanner scanner = new Scanner(System.in);
+//        String input = scanner.next();
+//        if (onlyDigits(input,input.length())){
+//
+//        }
+
+        System.out.println(jeden);
+        //System.out.println(mapper.map(jeden).toString());
 
 
-        System.out.println(service.getClassSpells(1).body());
+    }
 
+    public static boolean onlyDigits(String str, int n) {
+        for (int i = 0; i < n; i++) {
+            if (str.charAt(i) < '0' || str.charAt(i) > '9') {
+                return false;
+            }
+        }
+        return true;
     }
 }
