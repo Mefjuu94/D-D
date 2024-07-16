@@ -19,13 +19,6 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class ApiHandlersConnectionMockitoTests {
 
-    private final String URL = "https://www.dnd5eapi.co/api/classes/";
-
-    private final String[] classes = {"barbarian", "bard", "cleric", "druid", "fighter",
-            "monk", "paladin", "ranger", "rogue", "sorcerer", "warlock", "wizard"};
-    private final String[] races = {"dragonborn", "dwarf", "elf", "gnome", "half-elf",
-            "half-orc", "halfling", "human", "tiefling"};
-
     private final String URLProficences = "https://www.dnd5eapi.co/api/races/";
 
     @Mock
@@ -37,7 +30,7 @@ public class ApiHandlersConnectionMockitoTests {
 
 
     //**********Class Features Handler**********
-    private ClassFeaturesHanlder classFeaturesHanlder;
+    private ClassFeaturesHandler classFeaturesHandler;
     private final String classFeaturesResponseBody = "{\"count\":2,\"results\":[{\"index\":\"bardic-inspiration-d6\",\"name\":\"Bardic Inspiration (d6)\",\"url\":\"/api/features/bardic-inspiration-d6\"},{\"index\":\"spellcasting-bard\",\"name\":\"Spellcasting: Bard\",\"url\":\"/api/features/spellcasting-bard\"}]}\n";
 
     public HttpResponse<String> setResponse(String responseBody, int statusCode) {
@@ -48,7 +41,7 @@ public class ApiHandlersConnectionMockitoTests {
 
     @Test
     public void response404() {
-        classFeaturesHanlder = new ClassFeaturesHanlder(client);
+        classFeaturesHandler = new ClassFeaturesHandler(client);
         when(response.statusCode()).thenReturn(404);
         System.out.println(response.statusCode());
 
@@ -58,32 +51,32 @@ public class ApiHandlersConnectionMockitoTests {
     @Test
     public void happyPathToResponseFeaturesHandlerBody() throws IOException, InterruptedException, URISyntaxException {
         setResponse(classFeaturesResponseBody, 200);
-        request = HttpRequest.newBuilder(new URI(URL + classes[1] + "/levels/1/features")).GET().build();
-        classFeaturesHanlder = new ClassFeaturesHanlder(client);
+        request = HttpRequest.newBuilder(new URI(ApiConnectionConstants.URL + ApiConnectionConstants.CLASSES[1] + "/levels/1/features")).GET().build();
+        classFeaturesHandler = new ClassFeaturesHandler(client);
         when(client.send(request, HttpResponse.BodyHandlers.ofString())).thenReturn(response);
 
-        Assertions.assertEquals(classFeaturesResponseBody, classFeaturesHanlder.getClassFeatures(1).body());
+        Assertions.assertEquals(classFeaturesResponseBody, classFeaturesHandler.getClassFeatures(1).body());
     }
 
     @Test
     public void UnHappyPathToResponseFeaturesHandlerBody() throws IOException, InterruptedException, URISyntaxException {
         setResponse("", 200);
-        request = HttpRequest.newBuilder(new URI(URL + classes[1] + "/levels/1/features")).GET().build();
-        classFeaturesHanlder = new ClassFeaturesHanlder(client);
+        request = HttpRequest.newBuilder(new URI(ApiConnectionConstants.URL + ApiConnectionConstants.CLASSES[1] + "/levels/1/features")).GET().build();
+        classFeaturesHandler = new ClassFeaturesHandler(client);
         when(client.send(request, HttpResponse.BodyHandlers.ofString())).thenReturn(response);
 
-        Assertions.assertNotEquals(classFeaturesResponseBody, classFeaturesHanlder.getClassFeatures(1).body());
+        Assertions.assertNotEquals(classFeaturesResponseBody, classFeaturesHandler.getClassFeatures(1).body());
     }
 
     @Test
     public void UnHappyPathToResponseFeaturesHandlerBadIndex() throws IOException, InterruptedException, URISyntaxException {
         String otherAnswer = "{\"count\":8,\"results\":[{\"index\":\"fighter-fighting-style\",\"name\":\"Fighting Style\",\"url\":\"/api/features/fighter-fighting-style\"},{\"index\":\"fighter-fighting-style-archery\",\"name\":\"Fighting Style: Archery\",\"url\":\"/api/features/fighter-fighting-style-archery\"},{\"index\":\"fighter-fighting-style-defense\",\"name\":\"Fighting Style: Defense\",\"url\":\"/api/features/fighter-fighting-style-defense\"},{\"index\":\"fighter-fighting-style-dueling\",\"name\":\"Fighting Style: Dueling\",\"url\":\"/api/features/fighter-fighting-style-dueling\"},{\"index\":\"fighter-fighting-style-great-weapon-fighting\",\"name\":\"Fighting Style: Great Weapon Fighting\",\"url\":\"/api/features/fighter-fighting-style-great-weapon-fighting\"},{\"index\":\"fighter-fighting-style-protection\",\"name\":\"Fighting Style: Protection\",\"url\":\"/api/features/fighter-fighting-style-protection\"},{\"index\":\"fighter-fighting-style-two-weapon-fighting\",\"name\":\"Fighting Style: Two-Weapon Fighting\",\"url\":\"/api/features/fighter-fighting-style-two-weapon-fighting\"},{\"index\":\"second-wind\",\"name\":\"Second Wind\",\"url\":\"/api/features/second-wind\"}]}\n";
         setResponse(otherAnswer, 200);
-        request = HttpRequest.newBuilder(new URI(URL + classes[2] + "/levels/1/features")).GET().build();
-        classFeaturesHanlder = new ClassFeaturesHanlder(client);
+        request = HttpRequest.newBuilder(new URI(ApiConnectionConstants.URL + ApiConnectionConstants.CLASSES[2] + "/levels/1/features")).GET().build();
+        classFeaturesHandler = new ClassFeaturesHandler(client);
         when(client.send(request, HttpResponse.BodyHandlers.ofString())).thenReturn(response);
 
-        Assertions.assertNotEquals(classFeaturesResponseBody, classFeaturesHanlder.getClassFeatures(2).body());
+        Assertions.assertNotEquals(classFeaturesResponseBody, classFeaturesHandler.getClassFeatures(2).body());
     }
 
     //TODO WRITE TEST TO INDEX OUT OF BOUNDS! INDEX > 12
@@ -91,11 +84,11 @@ public class ApiHandlersConnectionMockitoTests {
     @Test
     public void UnHappyPathToResponseFeaturesHandlerIndexOutOfBounds() throws IOException, InterruptedException, URISyntaxException {
         setResponse(null, 200);
-        request = HttpRequest.newBuilder(new URI(URL + classes[231] + "/levels/1/features")).GET().build();
-        classFeaturesHanlder = new ClassFeaturesHanlder(client);
+        request = HttpRequest.newBuilder(new URI(ApiConnectionConstants.URL + ApiConnectionConstants.CLASSES[231] + "/levels/1/features")).GET().build();
+        classFeaturesHandler = new ClassFeaturesHandler(client);
         when(client.send(request, HttpResponse.BodyHandlers.ofString())).thenReturn(response);
 
-        Assertions.assertNotEquals(classFeaturesResponseBody, classFeaturesHanlder.getClassFeatures(231).body());
+        Assertions.assertNotEquals(classFeaturesResponseBody, classFeaturesHandler.getClassFeatures(231).body());
     }
 
 
@@ -106,7 +99,7 @@ public class ApiHandlersConnectionMockitoTests {
     @Test
     public void happyPathToResponseInformationHandlerBody() throws IOException, InterruptedException, URISyntaxException {
         setResponse(classInformationResponseBody, 200);
-        request = HttpRequest.newBuilder(new URI(URL + classes[3] )).GET().build();
+        request = HttpRequest.newBuilder(new URI(ApiConnectionConstants.URL + ApiConnectionConstants.CLASSES[3] )).GET().build();
         classInformationHandler = new ClassInformationHandler(client);
         when(client.send(request, HttpResponse.BodyHandlers.ofString())).thenReturn(response);
 
@@ -116,7 +109,7 @@ public class ApiHandlersConnectionMockitoTests {
     @Test
     public void UnHappyPathToResponseInformationHandlerBody() throws IOException, InterruptedException, URISyntaxException {
         setResponse("", 200);
-        request = HttpRequest.newBuilder(new URI(URL + classes[3] )).GET().build();
+        request = HttpRequest.newBuilder(new URI(ApiConnectionConstants.URL + ApiConnectionConstants.CLASSES[3] )).GET().build();
         classInformationHandler = new ClassInformationHandler(client);
         when(client.send(request, HttpResponse.BodyHandlers.ofString())).thenReturn(response);
 
@@ -132,7 +125,7 @@ public class ApiHandlersConnectionMockitoTests {
     @Test
     public void happyPathToResponseProficenciesHandlerBody() throws IOException, InterruptedException, URISyntaxException {
         setResponse(classProficencesResponseBody, 200);
-        request = HttpRequest.newBuilder(new URI(URLProficences + races[4] + "/proficiencies")).GET().build();
+        request = HttpRequest.newBuilder(new URI(URLProficences + ApiConnectionConstants.RACES[4] + "/proficiencies")).GET().build();
         classProficencesHandler = new ClassProficenciesHandler(client);
         when(client.send(request, HttpResponse.BodyHandlers.ofString())).thenReturn(response);
 
@@ -142,7 +135,7 @@ public class ApiHandlersConnectionMockitoTests {
     @Test
     public void UnHappyPathToResponseProficenciesHandlerBody() throws IOException, InterruptedException, URISyntaxException {
         setResponse("", 200);
-        request = HttpRequest.newBuilder(new URI(URLProficences + races[4] + "/proficiencies")).GET().build();
+        request = HttpRequest.newBuilder(new URI(URLProficences + ApiConnectionConstants.RACES[4] + "/proficiencies")).GET().build();
         classProficencesHandler = new ClassProficenciesHandler(client);
         when(client.send(request, HttpResponse.BodyHandlers.ofString())).thenReturn(response);
 
@@ -157,7 +150,7 @@ public class ApiHandlersConnectionMockitoTests {
     @Test
     public void happyPathToResponseResourcesHandlerBody() throws IOException, InterruptedException, URISyntaxException {
         setResponse(classResourcesResponseBody, 200);
-        request = HttpRequest.newBuilder(new URI(URL + classes[10] + "/levels/1")).GET().build();
+        request = HttpRequest.newBuilder(new URI(ApiConnectionConstants.URL + ApiConnectionConstants.CLASSES[10] + "/levels/1")).GET().build();
         classResourcesHandler = new ClassResourcesHandler(client);
         when(client.send(request, HttpResponse.BodyHandlers.ofString())).thenReturn(response);
 
@@ -167,7 +160,7 @@ public class ApiHandlersConnectionMockitoTests {
     @Test
     public void UnHappyPathToResponseResourcesHandlerBody() throws IOException, InterruptedException, URISyntaxException {
         setResponse("", 200);
-        request = HttpRequest.newBuilder(new URI(URL + classes[10] + "/levels/1")).GET().build();
+        request = HttpRequest.newBuilder(new URI(ApiConnectionConstants.URL + ApiConnectionConstants.CLASSES[10] + "/levels/1")).GET().build();
         classResourcesHandler = new ClassResourcesHandler(client);
         when(client.send(request, HttpResponse.BodyHandlers.ofString())).thenReturn(response);
 
@@ -181,7 +174,7 @@ public class ApiHandlersConnectionMockitoTests {
     @Test
     public void happyPathToSpellsResourcesHandlerBody() throws IOException, InterruptedException, URISyntaxException {
         setResponse(classSpellsResponseBody, 200);
-        request = HttpRequest.newBuilder(new URI(URL + classes[11] + "/levels/" + 1 + "/spells")).GET().build();
+        request = HttpRequest.newBuilder(new URI(ApiConnectionConstants.URL + ApiConnectionConstants.CLASSES[11] + "/levels/" + 1 + "/spells")).GET().build();
         classSpellsHandler = new ClassSpellsHandler(client);
         when(client.send(request, HttpResponse.BodyHandlers.ofString())).thenReturn(response);
 
@@ -191,7 +184,7 @@ public class ApiHandlersConnectionMockitoTests {
     @Test
     public void UnHappyPathToResponseSpellsHandlerBody() throws IOException, InterruptedException, URISyntaxException {
         setResponse("", 200);
-        request = HttpRequest.newBuilder(new URI(URL + classes[11] + "/levels/" + 1 + "/spells")).GET().build();
+        request = HttpRequest.newBuilder(new URI(ApiConnectionConstants.URL + ApiConnectionConstants.CLASSES[11] + "/levels/" + 1 + "/spells")).GET().build();
         classSpellsHandler = new ClassSpellsHandler(client);
         when(client.send(request, HttpResponse.BodyHandlers.ofString())).thenReturn(response);
 
@@ -205,7 +198,7 @@ public class ApiHandlersConnectionMockitoTests {
     @Test
     public void happyPathToRaceInformationHandlerBody() throws IOException, InterruptedException, URISyntaxException {
         setResponse(classRaceInfoResponseBody, 200);
-        request = HttpRequest.newBuilder(new URI(URLProficences + races[8])).GET().build();
+        request = HttpRequest.newBuilder(new URI(URLProficences + ApiConnectionConstants.RACES[8])).GET().build();
         classRaceInformationHandler = new RaceInformationHandler(client);
         when(client.send(request, HttpResponse.BodyHandlers.ofString())).thenReturn(response);
 
@@ -215,7 +208,7 @@ public class ApiHandlersConnectionMockitoTests {
     @Test
     public void UnHappyPathToResponseRaceInformationHandlerBody() throws IOException, InterruptedException, URISyntaxException {
         setResponse("", 200);
-        request = HttpRequest.newBuilder(new URI(URLProficences + races[8])).GET().build();
+        request = HttpRequest.newBuilder(new URI(URLProficences + ApiConnectionConstants.RACES[8])).GET().build();
         classRaceInformationHandler = new RaceInformationHandler(client);
         when(client.send(request, HttpResponse.BodyHandlers.ofString())).thenReturn(response);
 

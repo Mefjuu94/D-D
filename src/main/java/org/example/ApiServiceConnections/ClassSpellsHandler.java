@@ -18,7 +18,7 @@ public class ClassSpellsHandler {
     public HttpResponse<String> getClassSpells(int index) {
         //(https://www.dnd5eapi.co/api/classes/:index/levels/:spell_level/spells
         try {
-            HttpRequest request = HttpRequest.newBuilder(new URI(ApiConnectionConstans.URL + ApiConnectionConstans.classes[index] + "/levels/" + 1 + "/spells")).GET().build();
+            HttpRequest request = HttpRequest.newBuilder(new URI(ApiConnectionConstants.URL + ApiConnectionConstants.CLASSES[index] + "/levels/" + 1 + "/spells")).GET().build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             System.out.println(response.statusCode());
             if (response.statusCode() == 200) {

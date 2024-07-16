@@ -1,7 +1,7 @@
 package org.example;
 
 import org.example.ApiServiceConnections.*;
-import org.example.Character.JSONMapper;
+
 
 import java.net.http.HttpClient;
 import java.util.Scanner;
@@ -11,7 +11,7 @@ public class Main {
 
         RaceInformationHandler cfh = new RaceInformationHandler(HttpClient.newHttpClient());
         String jeden = cfh.getRaceInformation(8).body();
-        JSONMapper mapper = new JSONMapper();
+        //JSONMapper mapper = new JSONMapper();
 
 
 //        Scanner scanner = new Scanner(System.in);

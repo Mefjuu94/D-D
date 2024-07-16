@@ -17,7 +17,7 @@ public class ClassResourcesHandler {
 
     public HttpResponse<String> getClassResources(int index) {
         try {
-            HttpRequest request = HttpRequest.newBuilder(new URI(ApiConnectionConstans.URL + ApiConnectionConstans.classes[index] + "/levels/1")).GET().build();
+            HttpRequest request = HttpRequest.newBuilder(new URI(ApiConnectionConstants.URL + ApiConnectionConstants.CLASSES[index] + "/levels/1")).GET().build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() == 200) {
                 return response;

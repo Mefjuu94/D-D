@@ -17,7 +17,7 @@ public class RaceInformationHandler {
     public HttpResponse<String> getRaceInformation(int index) {
         String URLraces = "https://www.dnd5eapi.co/api/races/";
         try {
-            HttpRequest request = HttpRequest.newBuilder(new URI(URLraces + ApiConnectionConstans.races[index])).GET().build();
+            HttpRequest request = HttpRequest.newBuilder(new URI(URLraces + ApiConnectionConstants.RACES[index])).GET().build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() == 200) {
                 return response;
