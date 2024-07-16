@@ -1,5 +1,6 @@
 package org.example.Character;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Feature {
@@ -9,6 +10,7 @@ public class Feature {
     public Feature(String name) {
         this.name = name;
     }
+
 
     public String getName() {
         return name;
@@ -29,5 +31,12 @@ public class Feature {
     @Override
     public int hashCode() {
         return Objects.hashCode(name);
+    }
+
+    @Override
+    public String toString() {
+        return "Feature{" +
+                "name='" + name + '\'' +
+                '}';
     }
 }
