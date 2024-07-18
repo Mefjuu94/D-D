@@ -8,17 +8,17 @@ public class Character {
     private Race race;
     private String backstory;
     private List<Feature> features;
-    private Class Class;
+    private CharacterClass characterClass;
     private List<Spell> spells;
     private List<String> languages;
     private List<String> proficiencies;
 
-    public Character(String name, Race race, String backstory, List<Feature> features, java.lang.Class aClass, List<Spell> spells, List<String> languages, List<String> proficiencies) {
+    public Character(String name, Race race, String backstory, List<Feature> features, CharacterClass characterClass, List<Spell> spells, List<String> languages, List<String> proficiencies) {
         this.name = name;
         this.race = race;
         this.backstory = backstory;
         this.features = features;
-        Class = aClass;
+        this.characterClass = characterClass;
         this.spells = spells;
         this.languages = languages;
         this.proficiencies = proficiencies;
@@ -56,10 +56,12 @@ public class Character {
         this.features = features;
     }
 
+    public CharacterClass getCharacterClass() {
+        return characterClass;
+    }
 
-
-    public void setClass(java.lang.Class aClass) {
-        Class = aClass;
+    public void setCharacterClass(CharacterClass characterClass) {
+        this.characterClass = characterClass;
     }
 
     public List<Spell> getSpells() {
@@ -92,8 +94,8 @@ public class Character {
                 "name='" + name + '\'' +
                 ", race=" + race +
                 ", backstory='" + backstory + '\'' +
-                ", features=" + features.toString() +
-                ", Class=" + Class +
+                ", features=" + features +
+                ", characterClass=" + characterClass +
                 ", spells=" + spells +
                 ", languages=" + languages +
                 ", proficiencies=" + proficiencies +

@@ -1,6 +1,5 @@
 package org.example.Character;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class Feature {
