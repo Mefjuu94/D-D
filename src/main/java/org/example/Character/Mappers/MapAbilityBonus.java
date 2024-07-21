@@ -8,7 +8,7 @@ import static org.example.Character.JSONMapper.MAPPER;
 
 public class MapAbilityBonus {
 
-
+    //TODO get some data from??
     public AbilityBonus mapClassFeatures(String JSON){
         try {
             JsonNode jsonNode = MAPPER.readTree(JSON);
