@@ -1,5 +1,7 @@
 package org.example.Character;
 
+import java.util.Objects;
+
 public class AbilityBonus {
 
     private String name;
@@ -24,6 +26,19 @@ public class AbilityBonus {
 
     public void setValue(int value) {
         this.value = value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AbilityBonus that = (AbilityBonus) o;
+        return value == that.value && Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, value);
     }
 
     @Override
