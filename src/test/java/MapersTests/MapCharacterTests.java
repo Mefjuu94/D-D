@@ -18,13 +18,8 @@ public class MapCharacterTests {
 
     @Test
     public void mapperUNHappyPath() {
-        Assertions.assertNotEquals(outputMapper, " ");
-    }
-
-    @Test
-    public void mapperUNHappyPathNull() {
         String resultForString = testObject.mapCharacterClass(outputResponseBody).toString();
-        Assertions.assertNotEquals(null, resultForString);
+        Assertions.assertNotEquals(" ", resultForString);
     }
 
     @Test

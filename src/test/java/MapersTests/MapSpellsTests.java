@@ -16,14 +16,9 @@ public class MapSpellsTests {
     }
 
     @Test
-    public void mapperUNHappyPath() {
-        Assertions.assertNotEquals(outputMapper, " ");
-    }
-
-    @Test
     public void mapperUNHappyPathNull() {
         String resultForString = testObject.mapClassSpells(outputResponseBody).toString();
-        Assertions.assertNotEquals(null, resultForString);
+        Assertions.assertNotEquals("", resultForString);
     }
 
     @Test

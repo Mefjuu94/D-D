@@ -10,7 +10,6 @@ import static org.example.Character.JSONMapper.MAPPER;
 
 public class MapSpells {
 
-    //TODO OGARNĄĆ KTÓrE TO SPELE KLASOWE
     public ArrayList<Spell> mapClassSpells(String JSON){
         try {
             JsonNode jsonNode = MAPPER.readTree(JSON);

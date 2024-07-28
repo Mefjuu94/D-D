@@ -10,7 +10,6 @@ public class Feature {
         this.name = name;
     }
 
-
     public String getName() {
         return name;
     }

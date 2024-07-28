@@ -16,7 +16,7 @@ public class MapCharacterClass {
         try {
             JsonNode jsonNode = MAPPER.readTree(JSON);
 
-            List<String> avaibleSkills = new ArrayList<>();
+            List<String> availableSkills = new ArrayList<>();
             List<String> startingProficences = new ArrayList<>();
             List<Item> startingEquipment = new ArrayList<>();
 
@@ -24,7 +24,7 @@ public class MapCharacterClass {
             System.out.println();
             for (Object skill : skills) {
                 String name = skill.toString();
-                avaibleSkills.add(name);
+                availableSkills.add(name);
             }
 
             Object[] proficences = jsonNode.get("proficiencies").findValuesAsText("name").toArray();
@@ -41,7 +41,7 @@ public class MapCharacterClass {
                 startingEquipment.add(new Item(name,quantityOfItem));
             }
 
-            return new CharacterClass(avaibleSkills, startingProficences, startingEquipment);
+            return new CharacterClass(availableSkills, startingProficences, startingEquipment);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

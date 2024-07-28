@@ -2,7 +2,7 @@ package org.example.Character;
 
 public class Spell {
 
-    String spellName;
+    private String spellName;
 
     public Spell(String spellName) {
         this.spellName = spellName;

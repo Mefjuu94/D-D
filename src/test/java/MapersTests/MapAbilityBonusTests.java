@@ -32,7 +32,7 @@ public class MapAbilityBonusTests {
     }
 
     @Test
-    public void mapperUnHappyPathNullPointerException(){
+    public void mapperUnHappyPathIndexOutOfBoundsException(){
         Assertions.assertThrows(ArrayIndexOutOfBoundsException.class,()->testObject.mapAbilityBonus(badOutputMapper));
     }
 

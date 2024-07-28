@@ -22,11 +22,11 @@ public class ApiHandlersConnectionMockitoTest {
     public static final String URLProficences = "https://www.dnd5eapi.co/api/races/";
 
     @Mock
-    public  HttpResponse<String> response;
+    private HttpResponse<String> response;
     @Mock
-    public  HttpClient client;
+    private HttpClient client;
     @Mock
-    public  HttpRequest request;
+    private HttpRequest request;
 
     public void setResponse(String responseBody, int statusCode) {
         when(response.statusCode()).thenReturn(statusCode);

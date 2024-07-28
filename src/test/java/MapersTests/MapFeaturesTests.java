@@ -17,14 +17,9 @@ public class MapFeaturesTests {
     }
 
     @Test
-    public void mapperUNHappyPath() {
-        Assertions.assertNotEquals(outputMapper, " ");
-    }
-
-    @Test
     public void mapperUNHappyPathNull() {
         String resultForString = testObject.mapClassFeatures(outputResponseBody).toString();
-        Assertions.assertNotEquals(null, resultForString);
+        Assertions.assertNotEquals("", resultForString);
     }
 
     @Test
