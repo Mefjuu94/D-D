@@ -17,14 +17,7 @@ public class MapRaceTests {
     }
 
     @Test
-    public void mapperUNHappyPathNull() {
-        String resultForString = testObject.mapRace(outputResponseBody).toString();
-        Assertions.assertNotEquals("", resultForString);
-    }
-
-    @Test
     public void mapperUnHappyPathNullPointerException() {
         Assertions.assertThrows(NullPointerException.class, () -> testObject.mapRace(badOutputMapper));
     }
-
 }

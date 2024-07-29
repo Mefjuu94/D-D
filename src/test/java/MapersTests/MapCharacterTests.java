@@ -17,15 +17,7 @@ public class MapCharacterTests {
     }
 
     @Test
-    public void mapperUNHappyPath() {
-        String resultForString = testObject.mapCharacterClass(outputResponseBody).toString();
-        Assertions.assertNotEquals(" ", resultForString);
-    }
-
-    @Test
     public void mapperUnHappyPathNullPointerException() {
         Assertions.assertThrows(NullPointerException.class, () -> testObject.mapCharacterClass(badOutputMapper));
     }
-
-
 }

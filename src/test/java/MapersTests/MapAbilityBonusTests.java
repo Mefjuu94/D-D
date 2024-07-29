@@ -12,12 +12,18 @@ import java.util.List;
 public class MapAbilityBonusTests {
 
     //index 2
-    private final ArrayNode outputMapper = (ArrayNode) JSONMapper.MAPPER.readTree("[{\"ability_score\":{\"index\":\"dex\",\"name\":\"DEX\",\"url\":\"/api/ability-scores/dex\"},\"bonus\":2}]");
     private final List<AbilityBonus> abilityBonuses = new ArrayList<>();
     private final MapAbilityBonus testObject = new MapAbilityBonus();
-    private final ArrayNode badOutputMapper = (ArrayNode) JSONMapper.MAPPER.readTree("[{\"ability_score\":{\"index\":\"dex\",\"name\":\"DEX\",\"url\":\"/api/ability-scores/dex\"},\"noslda\":2}]");
 
-    public MapAbilityBonusTests() throws JsonProcessingException {
+    private final ArrayNode outputMapper;
+    private final ArrayNode badOutputMapper;
+    {
+        try {
+            outputMapper = (ArrayNode) JSONMapper.MAPPER.readTree("[{\"ability_score\":{\"index\":\"dex\",\"name\":\"DEX\",\"url\":\"/api/ability-scores/dex\"},\"bonus\":2}]");
+            badOutputMapper = (ArrayNode) JSONMapper.MAPPER.readTree("[{\"ability_score\":{\"index\":\"dex\",\"name\":\"DEX\",\"url\":\"/api/ability-scores/dex\"},\"noslda\":2}]");
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
