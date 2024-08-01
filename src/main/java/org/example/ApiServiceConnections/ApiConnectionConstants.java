@@ -7,6 +7,4 @@ public class ApiConnectionConstants {
             "monk", "paladin", "ranger", "rogue", "sorcerer", "warlock", "wizard"};
     public static final String[] RACES = {"dragonborn", "dwarf", "elf", "gnome", "half-elf",
             "half-orc", "halfling", "human", "tiefling"};
-
-
 }

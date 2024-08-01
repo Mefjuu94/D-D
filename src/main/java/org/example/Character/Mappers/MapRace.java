@@ -17,12 +17,10 @@ public class MapRace {
         try {
             JsonNode jsonNode = MAPPER.readTree(JSON);
 
-
             List<AbilityBonus> bonuses = new ArrayList<>();
             ArrayNode bonusesArray = (ArrayNode) jsonNode.get("ability_bonuses");
             MapAbilityBonus mapAbilityBonus = new MapAbilityBonus();
             bonuses = mapAbilityBonus.mapAbilityBonus(bonusesArray);
-
 
             String speedString = jsonNode.get("speed").toString();
             int speed = Integer.parseInt(speedString);
