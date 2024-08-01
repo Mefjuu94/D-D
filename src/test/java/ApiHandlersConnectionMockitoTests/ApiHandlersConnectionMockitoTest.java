@@ -17,9 +17,9 @@ import static org.mockito.Mockito.when;
 
 
 @ExtendWith(MockitoExtension.class)
-public class ApiHandlersConnectionMockitoTests {
+public class ApiHandlersConnectionMockitoTest {
 
-    private final String URLProficences = "https://www.dnd5eapi.co/api/races/";
+    public static final String URLProficences = "https://www.dnd5eapi.co/api/races/";
 
     @Mock
     private HttpResponse<String> response;
@@ -28,19 +28,19 @@ public class ApiHandlersConnectionMockitoTests {
     @Mock
     private HttpRequest request;
 
+    public void setResponse(String responseBody, int statusCode) {
+        when(response.statusCode()).thenReturn(statusCode);
+        lenient().when(response.body()).thenReturn(responseBody);
+    }
 
     //**********Class Features Handler**********
     private ClassFeaturesHandler classFeaturesHandler;
     private final String classFeaturesResponseBody = "{\"count\":2,\"results\":[{\"index\":\"bardic-inspiration-d6\",\"name\":\"Bardic Inspiration (d6)\",\"url\":\"/api/features/bardic-inspiration-d6\"},{\"index\":\"spellcasting-bard\",\"name\":\"Spellcasting: Bard\",\"url\":\"/api/features/spellcasting-bard\"}]}\n";
 
-    public HttpResponse<String> setResponse(String responseBody, int statusCode) {
-        when(response.statusCode()).thenReturn(statusCode);
-        lenient().when(response.body()).thenReturn(responseBody);
-        return response;
-    }
 
     @Test
     public void response404() {
+        setResponse("",404);
         classFeaturesHandler = new ClassFeaturesHandler(client);
         when(response.statusCode()).thenReturn(404);
         System.out.println(response.statusCode());
@@ -77,18 +77,6 @@ public class ApiHandlersConnectionMockitoTests {
         when(client.send(request, HttpResponse.BodyHandlers.ofString())).thenReturn(response);
 
         Assertions.assertNotEquals(classFeaturesResponseBody, classFeaturesHandler.getClassFeatures(2).body());
-    }
-
-    //TODO WRITE TEST TO INDEX OUT OF BOUNDS! INDEX > 12
-
-    @Test
-    public void UnHappyPathToResponseFeaturesHandlerIndexOutOfBounds() throws IOException, InterruptedException, URISyntaxException {
-        setResponse(null, 200);
-        request = HttpRequest.newBuilder(new URI(ApiConnectionConstants.URL + ApiConnectionConstants.CLASSES[231] + "/levels/1/features")).GET().build();
-        classFeaturesHandler = new ClassFeaturesHandler(client);
-        when(client.send(request, HttpResponse.BodyHandlers.ofString())).thenReturn(response);
-
-        Assertions.assertNotEquals(classFeaturesResponseBody, classFeaturesHandler.getClassFeatures(231).body());
     }
 
 

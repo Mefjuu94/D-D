@@ -16,10 +16,6 @@ public class ClassFeaturesHandler {
     }
 
     public HttpResponse<String> getClassFeatures(int index) {
-        if (index > 12){
-            System.out.println("index out of bounds! Index > 12");
-            return null;
-        }
         try {
             HttpRequest request = HttpRequest.newBuilder(new URI(ApiConnectionConstants.URL + ApiConnectionConstants.CLASSES[index] + "/levels/1/features")).GET().build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
