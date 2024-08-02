@@ -1,5 +1,6 @@
 import org.example.Character.Feature;
 import org.example.Character.Spell;
+import org.example.UserService.ValidationService;
 import org.example.UserService.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -38,7 +39,7 @@ public class UserServiceAndInputTests {
     @Test
     public void getCharacterRaceHappyTest() {
         setScannerMultipleResponseForSpellsTest("99", "-1", "avca", "5"); //half-orc
-        String response = "Race{bonuses=[AbilityBonus{name='STR', value=2}, AbilityBonus{name='CON', value=1}], speed=30, size='[\"Medium\"]', languages=[Common, Orc], proficiencies=[Skill: Intimidation]}";
+        String response = "Race{raceName='\"Half-Orc\"', bonuses=[AbilityBonus{name='STR', value=2}, AbilityBonus{name='CON', value=1}], speed=30, size='[\"Medium\"]', languages=[Common, Orc], proficiencies=[Skill: Intimidation]}";
         userService = new UserService(scanner);
         Assertions.assertEquals(response, userService.chooseRace().toString());
     }
@@ -46,7 +47,7 @@ public class UserServiceAndInputTests {
     @Test
     public void getCharacterClassHappyTest() {
         setScannerMultipleResponseForSpellsTest("-1", " 999 213", "somethingWrong", "8"); // rogue
-        String response = "CharacterClass{availableSkills=[Skill: Acrobatics, Skill: Athletics, Skill: Deception, Skill: Insight, Skill: Intimidation, Skill: Investigation, Skill: Perception, Skill: Performance, Skill: Persuasion, Skill: Sleight of Hand, Skill: Stealth], proficiencies=[Light Armor, Simple Weapons, Longswords, Rapiers, Shortswords, Hand crossbows, Thieves' Tools, Saving Throw: DEX, Saving Throw: INT], startingEquipment=[Item{name='Leather Armor', quantity=1}, Item{name='Dagger', quantity=2}, Item{name='Thieves' Tools', quantity=1}]}";
+        String response = "CharacterClass{name='\"Rogue\"', availableSkills=[Skill: Acrobatics, Skill: Athletics, Skill: Deception, Skill: Insight, Skill: Intimidation, Skill: Investigation, Skill: Perception, Skill: Performance, Skill: Persuasion, Skill: Sleight of Hand, Skill: Stealth], proficiencies=[Light Armor, Simple Weapons, Longswords, Rapiers, Shortswords, Hand crossbows, Thieves' Tools, Saving Throw: DEX, Saving Throw: INT], startingEquipment=[Item{name='Leather Armor', quantity=1}, Item{name='Dagger', quantity=2}, Item{name='Thieves' Tools', quantity=1}]}";
         userService = new UserService(scanner);
         Assertions.assertEquals(response, userService.chooseClass().toString());
     }
