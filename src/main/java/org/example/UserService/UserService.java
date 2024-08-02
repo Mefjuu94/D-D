@@ -18,17 +18,14 @@ import java.util.Scanner;
 public class UserService {
 
     private Scanner scanner = new Scanner(System.in);
-    private InputService inputService = new InputService();
     protected int numberInput;
 
     private String characterName; //    First, user is prompted about the name of the character;
     private int raceIndex = 99;//    Second user is prompted about the race;
-    private String raceName = "";
     private int classIndex = 99;//    Third user is prompted about the class;
-    private String className = "";
 
     private final ArrayList<Spell> mySpells = new ArrayList<>();//    Fourth user is able to select spells/cantrips if available (can be done via a list and number of the spell);
-    private List<Feature> featureList;
+    private final List<Feature> featureList = new ArrayList<>();
     private String backStory;//    Fifth user can write background for the character;
     private final HttpClient client = HttpClient.newHttpClient();
 
@@ -44,7 +41,7 @@ public class UserService {
     public String getCharacterName() {
         System.out.println("Set name of your character:");
         characterName = scanner.nextLine();
-        while (!inputService.onlyAlphabets(characterName) ||
+        while (!ValidationService.onlyAlphabets(characterName) ||
                 characterName.length() > 25 || characterName.length() < 3) {
             System.out.println("Character name is wrong!\n*Lenght > 3\n*Only Alphabets!\n*No whitespaces\nTry again!");
             characterName = scanner.nextLine();
@@ -63,14 +60,14 @@ public class UserService {
         }
 
         String input = scanner.nextLine(); //
-        while (!inputService.onlyDigits(input) || !ifPharseProperly(input) ||
+        while (!ValidationService.onlyDigits(input) || !ifPharseProperly(input) ||
                 numberInput > ApiConnectionConstants.RACES.length -1 || numberInput < 0){
             System.out.println("try again! Select number 0-" + (ApiConnectionConstants.RACES.length-1));
             input = scanner.nextLine();
         }
         setRaceIndex(numberInput);
         System.out.println("Your choice: " + ApiConnectionConstants.RACES[raceIndex]);
-        raceName = ApiConnectionConstants.RACES[raceIndex];
+
         return mapRace.mapRace(raceInformationHandler.getRaceInformation(raceIndex).body());
     }
 
@@ -85,16 +82,15 @@ public class UserService {
         }
 
         String input = scanner.nextLine();
-        while (!inputService.onlyDigits(input) || !ifPharseProperly(input) ||
+        while (!ValidationService.onlyDigits(input) || !ifPharseProperly(input) ||
                 numberInput > ApiConnectionConstants.CLASSES.length -1 || numberInput < 0){
             System.out.println("try again! Select number 0-" + (ApiConnectionConstants.CLASSES.length-1));
             input = scanner.nextLine();
         }
         setClassIndex(numberInput);
         System.out.println("Your choice: " + ApiConnectionConstants.CLASSES[classIndex]);
-        featureList = featuresOfClass(classIndex);
-        System.out.println(featureList);
-        className = ApiConnectionConstants.CLASSES[classIndex];
+        featureList.addAll(featuresOfClass(classIndex)); // tak ma bnhyć!! i finalne
+
         return mapCharacterClass.mapCharacterClass(classInformationHandler.getClassInformation(classIndex).body());
     }
 
@@ -132,7 +128,7 @@ public class UserService {
 
             while (mySpells.size() < 3) {
                 String input = scanner.nextLine();
-                if (!inputService.onlyDigits(input) || !ifPharseProperly(input) ||
+                if (!ValidationService.onlyDigits(input) || !ifPharseProperly(input) ||
                         numberInput > spells.size() -1 || numberInput < 0) {
                     System.out.println("try again! Select number 0-" + (spells.size() - 1));
                 } else {

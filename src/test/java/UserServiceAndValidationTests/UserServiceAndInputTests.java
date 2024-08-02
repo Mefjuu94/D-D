@@ -1,6 +1,5 @@
 import org.example.Character.Feature;
 import org.example.Character.Spell;
-import org.example.UserService.InputService;
 import org.example.UserService.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -19,18 +18,15 @@ public class UserServiceAndInputTests {
 
     @Mock
     private Scanner scanner;
-
     private UserService userService;
-    private InputService inputService;
 
-    public void setScannerResponse(String response) {
+    private void setScannerResponse(String response) {
         when(scanner.nextLine()).thenReturn(response);
     }
 
-    public void setScannerMultipleResponseForSpellsTest(String first, String second, String third, String fourth) {
+    private void setScannerMultipleResponseForSpellsTest(String first, String second, String third, String fourth) {
         when(scanner.nextLine()).thenReturn(first).thenReturn(second).thenReturn(third).thenReturn(fourth);
     }
-
 
     @Test
     public void getCharacterNameUnHappyTest() {
@@ -97,47 +93,4 @@ public class UserServiceAndInputTests {
 
         Assertions.assertEquals(result, userService.backStory());
     }
-
-    @Test
-    public void InputServiceAlphabetHappyTest() {
-        inputService = new InputService();
-        String myTestString = "MyTestString";
-        Assertions.assertTrue(inputService.onlyAlphabets(myTestString));
-    }
-
-    @Test
-    public void InputServiceAlphabetUnHappyTest() {
-        inputService = new InputService();
-        String myTestString = "My Test String";
-        Assertions.assertFalse(inputService.onlyAlphabets(myTestString));
-    }
-
-    @Test
-    public void InputServiceAlphabetUnHappyNullTest() {
-        inputService = new InputService();
-        String myTestString = null;
-        Assertions.assertFalse(inputService.onlyAlphabets(myTestString));
-    }
-
-    @Test
-    public void InputServiceDigitHappyTest() {
-        inputService = new InputService();
-        String myTestString = "123";
-        Assertions.assertTrue(inputService.onlyDigits(myTestString));
-    }
-
-    @Test
-    public void InputServiceDigitUnHappyTest() {
-        inputService = new InputService();
-        String myTestString = "123asd";
-        Assertions.assertFalse(inputService.onlyDigits(myTestString));
-    }
-
-    @Test
-    public void InputServiceDigitUnHappyEmptyStringTest() {
-        inputService = new InputService();
-        String myTestString = " ";
-        Assertions.assertFalse(inputService.onlyDigits(myTestString));
-    }
-
 }

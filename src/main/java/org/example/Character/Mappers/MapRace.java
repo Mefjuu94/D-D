@@ -17,6 +17,9 @@ public class MapRace {
         try {
             JsonNode jsonNode = MAPPER.readTree(JSON);
 
+            String raceName = "";
+            raceName = jsonNode.get("name").toString();
+
             List<AbilityBonus> bonuses = new ArrayList<>();
             ArrayNode bonusesArray = (ArrayNode) jsonNode.get("ability_bonuses");
             MapAbilityBonus mapAbilityBonus = new MapAbilityBonus();
@@ -39,7 +42,7 @@ public class MapRace {
                 proficiencies.add(profi.path("name").asText());
             }
 
-            return new Race(bonuses,speed,size,languages,proficiencies);
+            return new Race(raceName,bonuses,speed,size,languages,proficiencies);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

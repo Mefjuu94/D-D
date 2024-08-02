@@ -1,8 +1,8 @@
 package org.example.UserService;
 
-public class InputService {
+public class ValidationService {
 
-    public boolean onlyDigits(String str) {
+    public static boolean onlyDigits(String str) {
         int n = str.length();
         for (int i = 0; i < n; i++) {
             if (str.charAt(i) < '0' || str.charAt(i) > '9') {
@@ -12,7 +12,7 @@ public class InputService {
         return true;
     }
 
-    public boolean onlyAlphabets(String str) {
+    public static boolean onlyAlphabets(String str) {
         if (str == null || str.isEmpty()) {
             return false;
         }
