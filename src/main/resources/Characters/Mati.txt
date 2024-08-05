@@ -1,0 +1,41 @@
+ character Name : Mati
+ race : 
+  race Name : Dragonborn
+  bonuses : 
+   bonus Name : STR
+   value : 2
+   bonus Name : CHA
+   value : 1
+  speed : 30
+  size : Medium
+  languages : Common Draconic 
+  proficiencies : none
+ backstory : kasfnm
+ features : 
+  feature Name : Unarmored Defense
+  feature Name : Rage
+ character Class : 
+  class Name : Barbarian
+  available Skills : 
+    skill name: Animal Handling 
+    skill name: Athletics 
+    skill name: Intimidation 
+    skill name: Nature 
+    skill name: Perception 
+    skill name: Survival 
+  proficiencies : 
+    proficiency name: Light Armor 
+    proficiency name: Medium Armor 
+    proficiency name: Shields 
+    proficiency name: Simple Weapons 
+    proficiency name: Martial Weapons 
+    proficiency name: Saving Throw: STR 
+    proficiency name: Saving Throw: CON 
+  starting Equipment : 
+   item Name : Explorer's Pack
+   quantity : 1
+   item Name : Javelin
+   quantity : 4
+ spells : none
+ languages : Common Draconic 
+ proficiencies : none

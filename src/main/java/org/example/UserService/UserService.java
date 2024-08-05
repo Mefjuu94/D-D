@@ -89,7 +89,7 @@ public class UserService {
         }
         setClassIndex(numberInput);
         System.out.println("Your choice: " + ApiConnectionConstants.CLASSES[classIndex]);
-        featureList.addAll(featuresOfClass(classIndex)); // tak ma bnhyć!! i finalne
+        featureList.addAll(featuresOfClass(classIndex));
 
         return mapCharacterClass.mapCharacterClass(classInformationHandler.getClassInformation(classIndex).body());
     }
@@ -116,8 +116,6 @@ public class UserService {
         MapSpells mapSpells = new MapSpells();
 
         ArrayList<Spell> spells = mapSpells.mapClassSpells(classSpellsHandler.getClassSpells(classIndex).body());
-
-        System.out.println(spells);
 
         if (spells.size() > 3) {
             System.out.println("Select your (3) spells by number:");
