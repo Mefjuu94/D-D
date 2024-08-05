@@ -33,7 +33,7 @@ public class Spell {
 
     @Override
     public String toString() {
-        return "Spells{" +
+        return "Spell{" +
                 "spellName='" + spellName + '\'' +
                 '}';
     }

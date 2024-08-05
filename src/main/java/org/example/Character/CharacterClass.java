@@ -47,7 +47,7 @@ public class CharacterClass {
     @Override
     public String toString() {
         return "CharacterClass{" +
-                "name='" + className + '\'' +
+                "className='" + className + '\'' +
                 ", availableSkills=" + availableSkills +
                 ", proficiencies=" + proficiencies +
                 ", startingEquipment=" + startingEquipment +

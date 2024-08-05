@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Character {
 
-    private String name;
+    private String characterName;
     private Race race;
     private String backstory;
     private List<Feature> features;
@@ -13,8 +13,8 @@ public class Character {
     private List<String> languages;
     private List<String> proficiencies;
 
-    public Character(String name, Race race, String backstory, List<Feature> features, CharacterClass characterClass, List<Spell> spells, List<String> languages, List<String> proficiencies) {
-        this.name = name;
+    public Character(String characterName, Race race, String backstory, List<Feature> features, CharacterClass characterClass, List<Spell> spells, List<String> languages, List<String> proficiencies) {
+        this.characterName = characterName;
         this.race = race;
         this.backstory = backstory;
         this.features = features;
@@ -24,12 +24,12 @@ public class Character {
         this.proficiencies = proficiencies;
     }
 
-    public String getName() {
-        return name;
+    public String getCharacterName() {
+        return characterName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCharacterName(String characterName) {
+        this.characterName = characterName;
     }
 
     public Race getRace() {
@@ -91,7 +91,7 @@ public class Character {
     @Override
     public String toString() {
         return "Character{" +
-                "name='" + name + '\'' +
+                "characterName='" + characterName + '\'' +
                 ", race=" + race +
                 ", backstory='" + backstory + '\'' +
                 ", features=" + features +
