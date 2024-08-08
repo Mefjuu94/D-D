@@ -20,7 +20,6 @@ public class ClassSpellsHandler {
         try {
             HttpRequest request = HttpRequest.newBuilder(new URI(ApiConnectionConstants.URL + ApiConnectionConstants.CLASSES[index] + "/levels/" + 1 + "/spells")).GET().build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            System.out.println(response.statusCode());
             if (response.statusCode() == 200) {
                 return response;
             }

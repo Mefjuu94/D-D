@@ -4,18 +4,18 @@ import java.util.Objects;
 
 public class Feature {
 
-    private String name;
+    private String featureName;
 
-    public Feature(String name) {
-        this.name = name;
+    public Feature(String featureName) {
+        this.featureName = featureName;
     }
 
-    public String getName() {
-        return name;
+    public String getFeatureName() {
+        return featureName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFeatureName(String featureName) {
+        this.featureName = featureName;
     }
 
     @Override
@@ -23,18 +23,18 @@ public class Feature {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Feature feature = (Feature) o;
-        return Objects.equals(name, feature.name);
+        return Objects.equals(featureName, feature.featureName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(name);
+        return Objects.hashCode(featureName);
     }
 
     @Override
     public String toString() {
         return "Feature{" +
-                "name='" + name + '\'' +
+                "featureName='" + featureName + '\'' +
                 '}';
     }
 }

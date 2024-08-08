@@ -4,19 +4,25 @@ import java.util.List;
 
 public class Race {
 
+    private String raceName;
     private List<AbilityBonus> bonuses;
     private int speed;
     private String size;
     private List<String> languages;
     private List<String> proficiencies;
 
-    public Race(List<AbilityBonus> bonuses, int speed, String size, List<String> languages, List<String> proficiencies) {
+    public Race(String raceName,List<AbilityBonus> bonuses, int speed, String size, List<String> languages, List<String> proficiencies) {
+        this.raceName = raceName;
         this.bonuses = bonuses;
         this.speed = speed;
         this.size = size;
         this.languages = languages;
         this.proficiencies = proficiencies;
     }
+
+    public String getRaceName() {return raceName;}
+
+    public void setRaceName(String raceName) {this.raceName = raceName;}
 
     public List<AbilityBonus> getBonuses() {
         return bonuses;
@@ -61,7 +67,8 @@ public class Race {
     @Override
     public String toString() {
         return "Race{" +
-                "bonuses=" + bonuses +
+                "raceName='" + raceName + '\'' +
+                ", bonuses=" + bonuses +
                 ", speed=" + speed +
                 ", size='" + size + '\'' +
                 ", languages=" + languages +

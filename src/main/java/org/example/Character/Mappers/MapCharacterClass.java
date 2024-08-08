@@ -16,9 +16,12 @@ public class MapCharacterClass {
         try {
             JsonNode jsonNode = MAPPER.readTree(JSON);
 
+            String className = "";
             List<String> availableSkills = new ArrayList<>();
             List<String> startingProficences = new ArrayList<>();
             List<Item> startingEquipment = new ArrayList<>();
+
+            className = jsonNode.get("name").toString();
 
             Object[] skills = jsonNode.path("proficiency_choices").findValuesAsText("name").toArray();
             System.out.println();
@@ -41,7 +44,7 @@ public class MapCharacterClass {
                 startingEquipment.add(new Item(name,quantityOfItem));
             }
 
-            return new CharacterClass(availableSkills, startingProficences, startingEquipment);
+            return new CharacterClass(className,availableSkills, startingProficences, startingEquipment);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

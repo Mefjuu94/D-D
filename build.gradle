@@ -12,7 +12,7 @@ repositories {
 sourceSets {
     test {
         java {
-            srcDirs = ['src/test/java', 'src/test/java/MapersTests','src/test/java/ApiHandlersConnectionMockitoTests']
+            srcDirs = ['src/test/java', 'src/test/java/MapersTests','src/test/java/ApiHandlersConnectionMockitoTests','src/test/java/UserServiceTests']
         }
     }
 }

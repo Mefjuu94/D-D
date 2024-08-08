@@ -4,13 +4,13 @@ import java.util.List;
 
 public class CharacterClass {
 
+    private String className;
     private List<String> availableSkills;
-
     private List<String> proficiencies;
-
     private List<Item> startingEquipment;
 
-    public CharacterClass(List<String> availableSkills, List<String> proficiencies, List<Item> startingEquipment) {
+    public CharacterClass(String className, List<String> availableSkills, List<String> proficiencies, List<Item> startingEquipment) {
+        this.className = className;
         this.availableSkills = availableSkills;
         this.proficiencies = proficiencies;
         this.startingEquipment = startingEquipment;
@@ -40,10 +40,15 @@ public class CharacterClass {
         this.startingEquipment = startingEquipment;
     }
 
+    public String getClassName() {return className;}
+
+    public void setClassName(String className) {this.className = className;}
+
     @Override
     public String toString() {
         return "CharacterClass{" +
-                "availableSkills=" + availableSkills +
+                "className='" + className + '\'' +
+                ", availableSkills=" + availableSkills +
                 ", proficiencies=" + proficiencies +
                 ", startingEquipment=" + startingEquipment +
                 '}';

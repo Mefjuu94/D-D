@@ -4,20 +4,20 @@ import java.util.Objects;
 
 public class AbilityBonus {
 
-    private String name;
+    private String bonusName;
     private int value;
 
-    public AbilityBonus(String name, int value) {
-        this.name = name;
+    public AbilityBonus(String bonusName, int value) {
+        this.bonusName = bonusName;
         this.value = value;
     }
 
-    public String getName() {
-        return name;
+    public String getBonusName() {
+        return bonusName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setBonusName(String bonusName) {
+        this.bonusName = bonusName;
     }
 
     public int getValue() {
@@ -33,18 +33,18 @@ public class AbilityBonus {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AbilityBonus that = (AbilityBonus) o;
-        return value == that.value && Objects.equals(name, that.name);
+        return value == that.value && Objects.equals(bonusName, that.bonusName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, value);
+        return Objects.hash(bonusName, value);
     }
 
     @Override
     public String toString() {
         return "AbilityBonus{" +
-                "name='" + name + '\'' +
+                "bonusName='" + bonusName + '\'' +
                 ", value=" + value +
                 '}';
     }

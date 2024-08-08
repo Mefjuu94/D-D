@@ -2,20 +2,20 @@ package org.example.Character;
 
 public class Item {
 
-    private String name;
+    private String itemName;
     private int quantity;
 
-    public Item(String name, int quantity) {
-        this.name = name;
+    public Item(String itemName, int quantity) {
+        this.itemName = itemName;
         this.quantity = quantity;
     }
 
-    public String getName() {
-        return name;
+    public String getItemName() {
+        return itemName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 
     public int getQuantity() {
@@ -29,7 +29,7 @@ public class Item {
     @Override
     public String toString() {
         return "Item{" +
-                "name='" + name + '\'' +
+                "itemName='" + itemName + '\'' +
                 ", quantity=" + quantity +
                 '}';
     }
