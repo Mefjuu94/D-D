@@ -15,7 +15,10 @@ public class MapFeatures {
         try {
             JsonNode jsonNode = MAPPER.readTree(JSON);
             List <Feature> featureList = new ArrayList<>();
-            featureList.add(new Feature(jsonNode.get("results").findValuesAsText("name").toString()));
+            Object[] feature = jsonNode.get("results").findValuesAsText("name").toArray();
+            for (Object o : feature) {
+                featureList.add(new Feature(o.toString()));
+            }
             return featureList;
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);

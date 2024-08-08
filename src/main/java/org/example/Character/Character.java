@@ -101,4 +101,5 @@ public class Character {
                 ", proficiencies=" + proficiencies +
                 '}';
     }
+
 }

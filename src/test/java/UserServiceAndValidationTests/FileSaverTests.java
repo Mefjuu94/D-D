@@ -1,12 +1,14 @@
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.example.Character.Character;
 import org.example.Character.*;
 import org.example.UserService.FileSaver;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
-import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +21,13 @@ public class FileSaverTests {
     List<Feature> features = new ArrayList<>();
     List<Spell> spells = new ArrayList<>();
     List<Item> items = new ArrayList<>();
-    private Character emptytestCharacter = new Character("Empty",new Race("race",new ArrayList<>(),100,"S",new ArrayList<>(),new ArrayList<>())
-           ,"back",features,new CharacterClass("Class",availableSkills,proficiencies1,items),spells,new ArrayList<>(),proficiencies1);
+    private Character emptytestCharacter = new Character("Empty", new Race("race", new ArrayList<>(), 100, "S", new ArrayList<>(), new ArrayList<>())
+            , "back", features, new CharacterClass("Class", availableSkills, proficiencies1, items), spells, new ArrayList<>(), proficiencies1);
+
+
+    @TempDir
+    static Path tempDir;
+
 
     private Character createTestCharacter() {
         List<AbilityBonus> bonuses = new ArrayList<>();
@@ -65,14 +72,20 @@ public class FileSaverTests {
     }
 
     @Test
-    public void testIfFileOrCharacterNameExistTrue() {
-        try {
-            FileWriter writer = new FileWriter("src/main/resources/Characters/Test.txt");
-            writer.write("null");
-            writer.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    public void testIfFileOrCharacterNameExistTrue() throws IOException {
+        Path specificDir = Paths.get("src/main/resources/Characters");
+
+        if (!Files.exists(specificDir)) {
+            Files.createDirectories(specificDir);
         }
+
+        Path tempFile = specificDir.resolve("Test.txt");
+        if (!Files.exists(tempFile)) {
+            Files.createFile(tempFile);
+        }
+
+        tempFile.toFile().deleteOnExit();
+
         testCharacter = createTestCharacter();
         Assertions.assertTrue(testObject.checkIfFileOrCharacterExist(testCharacter.getCharacterName()));
     }
@@ -86,39 +99,39 @@ public class FileSaverTests {
     @Test
     public void createCharacterDescriptionTest() {
         testCharacter = createTestCharacter();
-        String preetyString = " character Name : Test\n" +
-                " race : \n" +
-                "  race Name : Elf\n" +
-                "  bonuses : \n" +
-                "   bonus Name : DEX\n" +
-                "   value : 2\n" +
-                "  speed : 30\n" +
-                "  size : Medium\n" +
-                "  languages : Common Elvish \n" +
-                "  proficiencies : Perception \n" +
-                " backstory : Test Pala\n" +
-                " features : \n" +
-                "  feature Name : Divine Sense\n" +
-                "  feature Name : Lay on Hands\n" +
-                " character Class : \n" +
-                "  class Name : Paladin\n" +
-                "  available Skills : Athletics Insight Intimidation Religion \n" +
-                "  proficiencies : \n" +
-                "    proficiency name: All armor \n" +
-                "    proficiency name: Shields \n" +
-                "    proficiency name: Simple Weapons \n" +
-                "    proficiency name: Martial Weapons \n" +
-                "    proficiency name: Saving Throw: WIS \n" +
-                "    proficiency name: Saving Throw: CHA \n" +
-                "  starting Equipment : \n" +
-                "   item Name : Chain Mail\n" +
-                "   quantity : 1\n" +
-                " spells : \n" +
-                "  spell Name : Bless\n" +
-                "  spell Name : Heroism\n" +
-                "  spell Name : Shield of Faith\n" +
-                " languages : Common Elvish \n" +
-                " proficiencies : Perception ";
+        String preetyString = "*character name: Test\n" +
+                "*race: Elf\n" +
+                "*race bonuses: \n" +
+                "- DEX | value: 2\n" +
+                "*speed: 30\n" +
+                "*size: Medium\n" +
+                "*languages: Common, Elvish\n" +
+                "*race proficiencies: \n" +
+                "- Perception\n" +
+                "*backstory:\n" +
+                "Test Pala\n" +
+                "*features: \n" +
+                "- Divine Sense\n" +
+                "- Lay on Hands\n" +
+                "*class name: Paladin\n" +
+                "*class skills: \n" +
+                "- Athletics\n" +
+                "- Insight\n" +
+                "- Intimidation\n" +
+                "- Religion\n" +
+                "*class proficiencies: \n" +
+                "- All armor\n" +
+                "- Shields\n" +
+                "- Simple Weapons\n" +
+                "- Martial Weapons\n" +
+                "- Saving Throw: WIS\n" +
+                "- Saving Throw: CHA\n" +
+                "*starting equipment: \n" +
+                "- Chain Mail | quantity: 1\n" +
+                "*spells: \n" +
+                "- Bless\n" +
+                "- Heroism\n" +
+                "- Shield of Faith\n";
 
         Assertions.assertEquals(preetyString.replaceAll("\r", ""),
                 testObject.createCharacterDescription(testCharacter).replaceAll("\r", ""));
@@ -126,20 +139,15 @@ public class FileSaverTests {
     }
 
     @Test
-    public void createCharacterDescriptionTestFail() {
+    public void testIfFileIsSavedCorrectly() {
         testCharacter = createTestCharacter();
-        String preetyString = "Nothing interesting here";
-        Assertions.assertNotEquals(preetyString.replaceAll("\r", ""),
-                testObject.createCharacterDescription(testCharacter).replaceAll("\r", ""));
-    }
-
-
-    //TODO end this method and method who save file need to be done!
-    @Test
-    public void createCharacterDescriptionTestEmptyFail() {
-        String preetyString = "Nothing interesting here";
-        Assertions.assertEquals("Exception.class",
-                testObject.createCharacterDescription(emptytestCharacter));
+        Path specificDir = Paths.get("src/main/resources/Characters");
+        Path tempFile = specificDir.resolve("Test.txt");
+        if (!Files.exists(tempFile) && !Files.exists(specificDir)) {
+            tempFile = specificDir.resolve("Test.txt");
+        }
+        tempFile.toFile().deleteOnExit();
+        Assertions.assertTrue(testObject.saveCharacter(testObject.createCharacterDescription(testCharacter)));
     }
 
 }

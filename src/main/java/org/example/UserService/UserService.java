@@ -31,11 +31,11 @@ public class UserService {
 
 //    At the end character is saved to the file with character name as title of the file.
 
-    public UserService(Scanner scanner){
+    public UserService(Scanner scanner) {
         this.scanner = scanner;
     }
 
-    public UserService(){
+    public UserService() {
     }
 
     public String getCharacterName() {
@@ -61,8 +61,8 @@ public class UserService {
 
         String input = scanner.nextLine(); //
         while (!ValidationService.onlyDigits(input) || !ifPharseProperly(input) ||
-                numberInput > ApiConnectionConstants.RACES.length -1 || numberInput < 0){
-            System.out.println("try again! Select number 0-" + (ApiConnectionConstants.RACES.length-1));
+                numberInput > ApiConnectionConstants.RACES.length - 1 || numberInput < 0) {
+            System.out.println("try again! Select number 0-" + (ApiConnectionConstants.RACES.length - 1));
             input = scanner.nextLine();
         }
         setRaceIndex(numberInput);
@@ -83,8 +83,8 @@ public class UserService {
 
         String input = scanner.nextLine();
         while (!ValidationService.onlyDigits(input) || !ifPharseProperly(input) ||
-                numberInput > ApiConnectionConstants.CLASSES.length -1 || numberInput < 0){
-            System.out.println("try again! Select number 0-" + (ApiConnectionConstants.CLASSES.length-1));
+                numberInput > ApiConnectionConstants.CLASSES.length - 1 || numberInput < 0) {
+            System.out.println("try again! Select number 0-" + (ApiConnectionConstants.CLASSES.length - 1));
             input = scanner.nextLine();
         }
         setClassIndex(numberInput);
@@ -121,13 +121,13 @@ public class UserService {
             System.out.println("Select your (3) spells by number:");
 
             for (int i = 0; i < spells.size(); i++) {
-                System.out.println(i + ". " + spells.get(i).getSpellName() );
+                System.out.println(i + ". " + spells.get(i).getSpellName());
             }
 
             while (mySpells.size() < 3) {
                 String input = scanner.nextLine();
                 if (!ValidationService.onlyDigits(input) || !ifPharseProperly(input) ||
-                        numberInput > spells.size() -1 || numberInput < 0) {
+                        numberInput > spells.size() - 1 || numberInput < 0) {
                     System.out.println("try again! Select number 0-" + (spells.size() - 1));
                 } else {
                     System.out.println("Your choice: " + spells.get(Integer.parseInt(input)).getSpellName());
@@ -139,36 +139,30 @@ public class UserService {
         return mySpells;
     }
 
-    public String backStory(){
-        System.out.println("What's your character backstory?\n*MAX 300 AND MIN 1 SIGN!");
+    public String backStory() {
+        System.out.println("What's your character backstory?\n*MAX 300 AND MIN 3 SIGN!");
 
         String input = scanner.nextLine();
-        while (input.length() > 300 || input.length() < 3 ){
-            System.out.println("Something going wrong!\n IT CANT BE EMPTY!\n MAX 300 AND MIN 1 SIGN!\n" );
+        while (input.length() > 300 || input.length() < 3) {
+            System.out.println("Something going wrong!\n IT CANT BE EMPTY!\n MAX 300 AND MIN 3 SIGN!\n");
             input = scanner.nextLine();
         }
         backStory = input;
         return input;
     }
 
-    private void summary(){
-            System.out.println("Summary:");
-            System.out.println("name: " + characterName +
-                    "\nRace: " + ApiConnectionConstants.RACES[raceIndex] +
-                    "\nClass: " + ApiConnectionConstants.CLASSES[classIndex] +
-                    "\nSpells: " + mySpells +
-                    "\nbackstory: " + backStory);
-    }
-
     public void setNumberInput(int numberInput) {
         this.numberInput = numberInput;
     }
+
     public void setRaceIndex(int raceIndex) {
         this.raceIndex = raceIndex;
     }
+
     public void setClassIndex(int classIndex) {
         this.classIndex = classIndex;
     }
+
     public List<Feature> getFeatureList() {
         return featureList;
     }

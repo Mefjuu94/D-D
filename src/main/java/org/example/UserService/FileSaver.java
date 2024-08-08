@@ -1,17 +1,13 @@
 package org.example.UserService;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import org.example.Character.*;
 import org.example.Character.Character;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import static org.example.Character.JSONMapper.MAPPER;
 
 public class FileSaver {
 
@@ -27,49 +23,108 @@ public class FileSaver {
 
     public String createCharacterDescription(Character character) {
         setCharacterName(character.getCharacterName());
+        return makePrettyString(character);
+    }
 
-        List<String> proficences = character.getCharacterClass().getProficiencies();
-        List<String> newProficencies = new ArrayList<>();
-        if (!proficences.isEmpty()) {
-            for (String proficence : proficences) {
-                newProficencies.add("&&" + proficence);
+    private String makePrettyString(Character character) {
+
+        String prettyString = "";
+
+        String characterName = "*character name: " + character.getCharacterName() + "\n";
+        String nameRaceString = "*race: " + character.getRace().getRaceName() + "\n";
+        List<AbilityBonus> ab = character.getRace().getBonuses();
+        String raceBonuses = "";
+        for (AbilityBonus abilityBonus : ab) {
+            raceBonuses = raceBonuses + "- " + abilityBonus.getBonusName() + " | value: " + abilityBonus.getValue() + "\n";
+        }
+        raceBonuses = "*race bonuses: \n" + raceBonuses;
+
+        String speed = "*speed: " + character.getRace().getSpeed() + "\n";
+        String size = "*size: " + character.getRace().getSize() + "\n";
+        String languages = "*languages: " + character.getRace().getLanguages().toString() + "\n";
+
+        String raceProficiencies = "*race proficiencies: \n";
+        List<String> raceProficienciesList = character.getRace().getProficiencies();
+        if (character.getRace().getProficiencies().isEmpty()) {
+            raceProficiencies = "*race proficiencies: none" + "\n";
+        } else
+        for (String s : raceProficienciesList) {
+            raceProficiencies = raceProficiencies + "- " + s + "\n";
+        }
+
+        String backstory = "*backstory:\n" + character.getBackstory() + "\n";
+        String features = "*features: \n";
+        List<Feature> fet = character.getFeatures();
+        if (character.getFeatures().isEmpty()) {
+            features = "*features: none" + "\n";
+        } else
+            for (Feature feature : fet) {
+                features = features + "- " + feature.getFeatureName() + "\n";
             }
-            character.getCharacterClass().setProficiencies(newProficencies);
-        }
 
-        return makePreetyString(character);
+        String characterClassName = "*class name: " + character.getCharacterClass().getClassName() + "\n";
+
+        String characterClassSkills = "*class skills: \n";
+        List<String> characterClassSkillsList = character.getCharacterClass().getAvailableSkills();
+        if (characterClassSkillsList.isEmpty()) {
+            characterClassSkills = "*class skills: none" + "\n";
+        } else
+            for (String s : characterClassSkillsList) {
+                characterClassSkills = characterClassSkills + "- " + s + "\n";
+            }
+        characterClassSkills = characterClassSkills.replaceAll("Skill: ", "");
+
+
+        String characterClassProficiencies = "*class proficiencies: \n";
+        List<String> characterClassproficienciessList = character.getCharacterClass().getProficiencies();
+        if (characterClassproficienciessList.isEmpty()) {
+            characterClassSkills = "*class proficiencies: none" + "\n";
+        } else
+            for (String s : characterClassproficienciessList) {
+                characterClassProficiencies = characterClassProficiencies + "- " + s + "\n";
+            }
+        characterClassProficiencies = characterClassProficiencies.replaceAll("proficiency name: ", "");
+
+
+        String startingEquipment = "*starting equipment: \n";
+        List<Item> startingEquipmentList = character.getCharacterClass().getStartingEquipment();
+        if (startingEquipmentList.isEmpty()) {
+            startingEquipment = "*starting equipment: empty equipment\n";
+        } else
+            for (Item item : startingEquipmentList) {
+                startingEquipment = startingEquipment + "- " + item.getItemName() + " | quantity: " + item.getQuantity() + "\n";
+            }
+
+
+        String spells = "*spells: \n";
+        List<Spell> spellsList = character.getSpells();
+        if (spellsList.isEmpty()) {
+            spells = "*spells: none\n";
+        } else
+            for (Spell spell : spellsList) {
+                spells = spells + "- " + spell.getSpellName() + "\n";
+            }
+
+
+        prettyString = characterName + nameRaceString + raceBonuses + speed + size + languages + raceProficiencies +
+                backstory + features + characterClassName + characterClassSkills +
+                characterClassProficiencies + startingEquipment + spells;
+
+        prettyString = prettyString.replaceAll("[\\[\\]]", "");
+
+        System.out.println(prettyString);
+
+        return prettyString;
     }
 
-    private String makePreetyString(Object o) {
-        MAPPER.enable(SerializationFeature.INDENT_OUTPUT);
-        // Konwersja obiektu do pretty string
-
-        String mapperString;
-        try {
-            mapperString = MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(o);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-
-        String emptyListToNoone = mapperString.replaceAll("\\[ ]", "none");
-        String deleteAllSigns = emptyListToNoone.replaceAll("[\\[\\]\\{\\},\"\\\\]", "");
-        String replaceSkill = deleteAllSigns.replaceAll("Skill:", "\n       skill name: ");
-        String repalceProficiencies = replaceSkill.replaceAll("&&", "\n       proficiency name: ");
-        String deleteUnnecessaryLines = repalceProficiencies.replaceAll("(?m)^\\s*\\r?\\n|\\r?\\n\\s*(?!.*\\r?\\n)", "");
-        String deleteBrackets = deleteUnnecessaryLines.replaceAll("} ],", "");
-        String splitCamelCase = deleteBrackets.replaceAll("([a-z])([A-Z])", "$1 $2");
-        mapperString = splitCamelCase.replaceAll("  ", " ");
-
-        return mapperString;
-    }
-
-    public void saveCharacter(String preetyString) {
+    public boolean saveCharacter(String preetyString) {
 
         FileWriter writer;
         try {
             writer = new FileWriter(file + "/" + characterName + ".txt");
             writer.write(preetyString);
             writer.close();
+            return true;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
