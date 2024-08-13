@@ -12,8 +12,6 @@ public class MapAbilityBonus {
 
         List<AbilityBonus> abilityBonuses = new ArrayList<>();
 
-        System.out.println(node);
-
         Object[] bonusName = node.findValuesAsText("name").toArray();
         Object[] bonusValue = node.findValuesAsText("bonus").toArray();
 
